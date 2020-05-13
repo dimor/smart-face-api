@@ -27,8 +27,7 @@ app.use(cors());
 
 ///////////////////////////GET ///////////////////////////////
 app.get('/',(req,res)=>{
-  console.log(database.users);
-  res.json(database.users);
+  res.json('its Working');
 
 })
 
