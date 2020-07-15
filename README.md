@@ -22,8 +22,8 @@ The project was coded with NodeJs.
 **libraries:**
 * bcrypt-nodejs - hash passwords.
 * ExpressJS - web framework for nodejs.
-* clarifai - clarifai api , for face regognition .
+* clarifai - clarifai api , for face recognition .
 * knex - SQL Query Builder.
 
 **Database**
-*PostgreSQL
+* PostgreSQL
