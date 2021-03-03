@@ -7,11 +7,11 @@ const handleRegister = (req, res, db, bcrypt) => {
 
 
   if (!email || !name || !password) {
-    return res.status(400).json('incorrect form submission');
+    return res.status(400).json('Incorrect form submission');
   } else {
     const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
     if (!re.test(String(email).toLowerCase())) {
-      return res.status(400).json('invalid email')
+      return res.status(400).json('Enter valid email')
     } else {
 
 
@@ -32,7 +32,7 @@ const handleRegister = (req, res, db, bcrypt) => {
             })
         })
           .then(response => res.json(response))
-          .catch(error => console.log(error))
+          .catch(error =>res.status(400).json('Something went wrong'))
       })
     };
   }
