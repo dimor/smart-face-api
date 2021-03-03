@@ -28,12 +28,12 @@ const handleRegister = (req, res, db, bcrypt) => {
                 email: email,
                 name: name,
                 joined: new Date()
-              })
+              }).into('users')
             })
-        }).then(response=>res.json(response))
-        .catch(error => console.log(error))
+        })
+          .then(response => res.json(response))
+          .catch(error => console.log(error))
       })
-      .catch(err=>console.log(err));
     };
   }
 }
