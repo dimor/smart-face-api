@@ -14,6 +14,7 @@ const handleRegister = (req,res,db,bcrypt)=>{
       return res.status(400).json('invalid email')
      }else{
        
+
        bcrypt.hash(password, null, null, function(err, hash) {
      
        db.transaction(trx=>{
