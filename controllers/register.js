@@ -15,7 +15,7 @@ const handleRegister = (req,res,db,bcrypt)=>{
      }else{
        
 
-       bcrypt.hash(password, null, null, function(err, hash) {
+       bcrypt.hash(password, 10, function(err, hash) {
      
        db.transaction(trx=>{
      
@@ -41,7 +41,7 @@ const handleRegister = (req,res,db,bcrypt)=>{
          .then(trx.commit)
          .catch(trx.rollback);
          })
-       })
+       }).catch(err=>console.log(err))
      };
      }
   }
