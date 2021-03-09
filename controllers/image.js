@@ -21,7 +21,7 @@ const handleApiCall = (req, res, db) => {
       if(Object.keys(dataExist.data).length === 0) {
         facesAnalyzed = 0;
       } else {
-        facesAnalyzed = dataExist.regions.length;
+        facesAnalyzed = dataExist.data.regions.length;
       }
     })
     .then(()=>{
