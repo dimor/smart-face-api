@@ -23,13 +23,12 @@ const handleRegister = (req, res, db, bcrypt) => {
             login_email: email,
           },['login_id']).into('login')
             .then((id) => {
-              console.log(id);
+              console.log({login_id}=id.pop());
               return trx.insert({
                 user_name: name,
                 user_joined: new Date(),
                 user_faces:0,
                 user_used:0,
-                id
               }).into('users')
             })
         })
