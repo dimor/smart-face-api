@@ -33,7 +33,7 @@ const handleRegister = (req, res, db, bcrypt) => {
             })
         })
           .then(response => res.json(response))
-          .catch(error =>res.status(400).json('Something went wrong'))
+          .catch(error =>res.status(400).json(error))
       })
     };
   }
