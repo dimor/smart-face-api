@@ -16,7 +16,7 @@ const handleApiCall = (req, res, db) => {
       console.log(response);
       clarifaiResponse = response;
       dataExist = response.data.outputs[0].data;
-      console.log(dataExist);
+      console.log('is data exist?',dataExist);
       if (dataExist) {
         facesAnalyzed = dataExist.regions.length;
       } else {
