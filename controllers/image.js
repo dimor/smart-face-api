@@ -25,7 +25,7 @@ const handleApiCall = (req, res, db) => {
       }
     })
     .then(()=>{
-       return db.from('users').where('id', '=', 10)
+       return db.from('users').where('login_id', '=', 10)
       .increment({
         user_used:1,
         user_faces:facesAnalyzed
