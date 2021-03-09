@@ -24,6 +24,8 @@ const handleRegister = (req, res, db, bcrypt) => {
             login_email: email,
           },['login_id']).into('login')
             .then((id) => {
+
+              console.log('insert id',id);
               return trx.insert({
                 user_name: name,
                 user_joined: new Date(),
