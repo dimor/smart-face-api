@@ -16,7 +16,7 @@ const handleApiCall = (req, res, db) => {
    
       clarifaiResponse = response;
 
-      dataExist = clarifaiResponse.data;
+      dataExist = clarifaiResponse;
 
       console.log('is data exist?',dataExist);
 
@@ -36,9 +36,9 @@ const handleApiCall = (req, res, db) => {
         console.log(result,clarifaiResponse);
         res.json({result,clarifaiResponse});
       })
-      .catch(err => res.status(400).json(err));
+      .catch(err => res.status(400).json(clarifaiResponse));
     })
-    .catch(err => res.status(400).json(err));
+    .catch(err => res.status(400).json(clarifaiResponse));
 }
 
 
