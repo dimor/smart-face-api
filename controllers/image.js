@@ -30,7 +30,7 @@ const handleApiCall = (req, res, db) => {
         user_used:1,
         user_faces:facesAnalyzed
       })
-      .returning('user_faces','user_used')
+      .returning(['user_faces','user_used'])
       .then(stats => {
         res.json({'stats': stats , 'clarifai':clarifaiResponse});
       })
