@@ -23,24 +23,19 @@ const handleApiCall = (req, res, db) => {
       } else {
         facesAnalyzed = dataExist.regions.length;
       }
-
-      console.log('face?',facesAnalyzed);
-
-      res.json(facesAnalyzed);
     })
-  
-    // .then(()=>{
-    //    return db.from('users').where('id', '=', 10)
-    //   .increment({
-    //     user_used:1,
-    //     user_faces:facesAnalyzed
-    //   })
-    //   .returning(['user_faces','user_used'])
-    //   .then(stats => {
-    //     res.json({'stats': stats , 'clarifai':clarifaiResponse});
-    //   })
-    //   .catch(err => res.status(400).json(err));
-    // })
+    .then(()=>{
+       return db.from('users').where('id', '=', 10)
+      .increment({
+        user_used:1,
+        user_faces:facesAnalyzed
+      })
+      .returning(['user_faces','user_used'])
+      .then(stats => {
+        res.json({'stats': stats , 'clarifai':clarifaiResponse});
+      })
+      .catch(err => res.status(400).json(err));
+    })
     .catch(err => res.status(400).json(err));
 }
 
