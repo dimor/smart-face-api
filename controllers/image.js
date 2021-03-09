@@ -16,7 +16,7 @@ const handleApiCall = (req, res, db) => {
    
       clarifaiResponse = response;
 
-      dataExist = clarifaiResponse.data.outputs;
+      dataExist = clarifaiResponse.data;
 
       console.log('is data exist?',dataExist);
 
