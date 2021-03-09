@@ -6,8 +6,6 @@ const app = new Clarifai.App({
 
 const handleApiCall = (req, res, db) => {
 
-
-
   let clarifaiResponse= null;
   let facesAnalyzed = null;
   let dataExist = null;
@@ -38,7 +36,5 @@ const handleApiCall = (req, res, db) => {
 
 
 module.exports = {
-
-  handleImage,
   handleApiCall
 }
