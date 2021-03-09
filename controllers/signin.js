@@ -18,10 +18,9 @@ const handleSignIn = (req,res,db,bcrypt)=>{
 db.select('login_email','login_hash').from('login')
 .where('login_email','=',email)
 .then(data=>{
-  console.log(data);
-  bcrypt.compare(password, data[0].hash, function(err, response) {
+  bcrypt.compare(password, data[0].login_hash, function(err, response) {
       if(response){
-          return db.select('*').from('users').where('email','=',email)
+          return db.select().from('users').where('login_email','=',email)
           .then(user=>{
             res.json(user[0])
           })
