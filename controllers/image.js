@@ -7,10 +7,10 @@ const app = new Clarifai.App({
 const handleApiCall = (req, res, db) => {
 
 
-  
-  const clarifaiResponse;
-  let facesAnalyzed;
-  const dataExist;
+
+  const clarifaiResponse= null;
+  let facesAnalyzed = null;
+  const dataExist = null;
 
   app.models
     .predict("a403429f2ddf4b49b307e318f00e528b", req.body.input)
