@@ -20,15 +20,15 @@ const handleRegister = (req, res, db, bcrypt) => {
         db.transaction(trx => {
 
           return trx.insert({
-            hash: hash,
-            email: email,
+            login_hash: hash,
+            login_email: email,
           }).into('login')
             .then(() => {
               return trx.insert({
-                name: name,
-                joined: new Date(),
-                faces:0,
-                used:0
+                user_name: name,
+                user_joined: new Date(),
+                user_faces:0,
+                user_used:0
               }).into('users')
             })
         })
