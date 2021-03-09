@@ -20,7 +20,11 @@ db.select('login_email','login_hash').from('login')
 .then(data=>{
   bcrypt.compare(password, data[0].login_hash, function(err, response) {
       if(response){
-          return db.select().from('login').where('login_email','=',email)
+          return db.select()
+          .from('login')
+          .join('users', 'login.login_id', '=', 'users.login_id')
+          .select()
+          .where('login_email','=',email)
           .then(user=>{
             res.json(user[0])
           })
