@@ -22,13 +22,14 @@ const handleRegister = (req, res, db, bcrypt) => {
           return trx.insert({
             login_hash: hash,
             login_email: email,
-          }).into('login')
-            .then(() => {
+          },['login_id']).into('login')
+            .then((id) => {
               return trx.insert({
                 user_name: name,
                 user_joined: new Date(),
                 user_faces:0,
-                user_used:0
+                user_used:0,
+                login_id:id
               }).into('users')
             })
         })
