@@ -30,11 +30,10 @@ const handleApiCall = (req, res, db) => {
       })
       .returning(['user_faces','user_used'])
       .then(result => {
-        res.json(result);
+        res.json({result,clarifaiResponse});
       })
     })
     .catch(err => res.status(400).json('unable to work with API'));
-
 }
 
 
