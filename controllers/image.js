@@ -18,14 +18,15 @@ const handleApiCall = (req, res, db) => {
 
       dataExist = clarifaiResponse.outputs[0].data;
 
-
       if (dataExist) {
         facesAnalyzed = dataExist.regions.length;
       } else {
         facesAnalyzed = 0;
       }
 
-    }).then(()=>{
+      console.log('face',facesAnalyzed);
+    })
+    .then(()=>{
        return db.from('users').where('id', '=', 10)
       .increment({
         user_used:1,
@@ -33,12 +34,11 @@ const handleApiCall = (req, res, db) => {
       })
       .returning(['user_faces','user_used'])
       .then(stats => {
-
         res.json({'stats': stats , 'clarifai':clarifaiResponse});
       })
-      .catch(err => res.status(400).json({'stats': stats , 'clarifai':clarifaiResponse}));
+      .catch(err => res.status(400).json(err));
     })
-    .catch(err => res.status(400).json({'stats': stats , 'clarifai':clarifaiResponse}));
+    .catch(err => res.status(400).json(err));
 }
 
 
