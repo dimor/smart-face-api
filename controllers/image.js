@@ -16,7 +16,7 @@ const handleApiCall = (req, res, db) => {
    
       clarifaiResponse = response;
 
-      dataExist = clarifaiResponse.outputs[0].data;
+      dataExist = clarifaiResponse.outputs[0];
 
 
 
@@ -27,8 +27,11 @@ const handleApiCall = (req, res, db) => {
       // }
 
       console.log('face@@@@@',
-      Object.keys(data).length === 0);
+      Object.keys(dataExist.data).length === 0);
+
+      res.json(dataExist.data);
     })
+  
     // .then(()=>{
     //    return db.from('users').where('id', '=', 10)
     //   .increment({
