@@ -16,7 +16,9 @@ const handleApiCall = (req, res, db) => {
    
       clarifaiResponse = response;
 
-      dataExist = clarifaiResponse.outputs[0];
+      dataExist = clarifaiResponse.outputs[0].data;
+
+
 
       // if (dataExist.data !== 'undefined' ) {
       //   facesAnalyzed = dataExist.regions.length;
@@ -24,7 +26,8 @@ const handleApiCall = (req, res, db) => {
       //   facesAnalyzed = 0;
       // }
 
-      console.log('face@@@@@',dataExist);
+      console.log('face@@@@@',
+      Object.keys(data).length === 0);
     })
     // .then(()=>{
     //    return db.from('users').where('id', '=', 10)
