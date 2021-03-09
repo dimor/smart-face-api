@@ -22,31 +22,21 @@ const handleApiCall = (req, res, db) => {
       } else {
         facesAnalyzed = 0;
       }
-
-
-
+    }).then(()=>{
+       return db.from('users').where('id', '=', 10)
+      .increment({
+        user_used:1,
+        user_faces:facesAnalyzed
+      })
+      .returning(['user_faces','user_used'])
+      .then(result => {
+        res.json(result);
+      })
     })
-
-
-
-
     .catch(err => res.status(400).json('unable to work with API'));
 
 }
 
-
-const handleImage = (req, res, db) => {
-
-  const { id } = req.body;
-
-  db('users').where('id', '=', id)
-    .increment('entries', 1)
-    .returning('entries')
-    .then(entries => {
-      res.json(entries[0]);
-    })
-    .catch(err => res.status(400).json('unable to get entries'))
-};
 
 module.exports = {
 
