@@ -16,15 +16,15 @@ const handleApiCall = (req, res, db) => {
    
       clarifaiResponse = response;
 
-      dataExist = clarifaiResponse.outputs[0].data;
+      dataExist = clarifaiResponse.outputs[0];
 
-      if (dataExist) {
+      if (dataExist.data !== 'undefined' ) {
         facesAnalyzed = dataExist.regions.length;
       } else {
         facesAnalyzed = 0;
       }
 
-      console.log('face',facesAnalyzed);
+      console.log('face@@@@@',facesAnalyzed);
     })
     // .then(()=>{
     //    return db.from('users').where('id', '=', 10)
