@@ -24,6 +24,8 @@ const handleApiCall = (req, res, db) => {
         facesAnalyzed = dataExist.regions.length;
       }
 
+      console.log('face?',facesAnalyzed);
+
       res.json(facesAnalyzed);
     })
   
