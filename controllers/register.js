@@ -28,7 +28,7 @@ const handleRegister = (req, res, db, bcrypt) => {
                 user_joined: new Date(),
                 user_faces:0,
                 user_used:0,
-                login_id:login_id
+                ['login_id']:login_id
               }).into('users')
             })
         })
