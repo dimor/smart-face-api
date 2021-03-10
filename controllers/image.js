@@ -40,7 +40,6 @@ const handleApiCall = (req, res, db) => {
       .catch(err => res.status(400).json(err));
     })
     .catch(err => res.status(400).json(err));
-}
 
 
 
@@ -61,7 +60,6 @@ const handleApiCall = (req, res, db) => {
     //   res.status(400).json(err)
     // });
 }
-
 
 module.exports = {
   handleApiCall
