@@ -27,7 +27,7 @@ const handleApiCall = (req, res, db) => {
       }
     })
     .then(() => {  // get user_faces,user_used from specific id
-       db.from('users').where('login_id', '=', 10)
+       return db.from('users').where('login_id', '=', 10)
         .increment({
           user_used: 1,
           user_faces: facesAnalyzed
@@ -35,9 +35,7 @@ const handleApiCall = (req, res, db) => {
         .returning(['user_faces', 'user_used'])
         .then(stats => {
           stats = stats;
-
-          console.log(stats);
-            
+          console.log(stats); 
         })
     })
     // .then(() => {  // get rank of spesific id
@@ -52,7 +50,10 @@ const handleApiCall = (req, res, db) => {
     .then(()=>{ // return as response  the stats and the clarifai response to user
       return res.json({ 'stats': stats, 'clarifai': clarifaiResponse, 'rank': rank });
     })
-    .catch (err => res.status(400).json(err));
+    .catch (err => {
+      console.error(err);
+     return res.status(400).json(err)
+    });
 }
 
 
