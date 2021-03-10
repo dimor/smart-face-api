@@ -27,21 +27,20 @@ const handleApiCall = (req, res, db) => {
       }
     })
     .then(() => {  // get user_faces,user_used from specific id
-       return db.from('users').where('login_id', '=', 10)
+        db.from('users').where('login_id', '=', 10)
         .increment({
           user_used: 1,
           user_faces: facesAnalyzed
         })
         .returning(['user_faces', 'user_used'])
-        .then(stats => {
-          stats = stats;
+        .then(userStats => {
+          stats = userStats;
           console.log(stats); 
         })
         .then(()=>{ // return as response  the stats and the clarifai response to user
-          return res.json({ 'stats': stats, 'clarifai': clarifaiResponse, 'rank': rank });
+           res.json({ 'stats': stats, 'clarifai': clarifaiResponse, 'rank': rank });
         })
-
-
+        .catch(err=>res.status(400).json(err))
     })
     // .then(() => {  // get rank of spesific id
     //   return db.select('rank')
