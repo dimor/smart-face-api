@@ -10,7 +10,7 @@ const handleApiCall = (req, res, db) => {
   let facesAnalyzed = null;
   let dataExist = null;
   let stats = null;
-  let rank = null;
+
 
   app.models
     .predict("a403429f2ddf4b49b307e318f00e528b", req.body.input)
@@ -40,6 +40,7 @@ const handleApiCall = (req, res, db) => {
         db.select('rank') 
         .from(db.select(db.raw('*,rank() over(order by user_faces desc) as rank from users')).as('temp'))
         .where({login_id:'6'})
+        .returning()
         .then(rank=> {
           return res.json({'stats': stats , 'clarifai':clarifaiResponse, 'rank':rank});
         })
