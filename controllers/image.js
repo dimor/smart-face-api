@@ -36,9 +36,9 @@ const handleApiCall = (req, res, db) => {
         .then(userStats => {
           stats = userStats;
           console.log(stats); 
+          res.json({ 'stats': stats, 'clarifai': clarifaiResponse, 'rank': rank });
         })
         .then(()=>{ // return as response  the stats and the clarifai response to user
-           res.json({ 'stats': stats, 'clarifai': clarifaiResponse, 'rank': rank });
         })
         .catch(err=>res.status(400).json(err))
     })
