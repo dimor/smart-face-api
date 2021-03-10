@@ -50,7 +50,7 @@ const handleApiCall = (req, res, db) => {
           rank = userRank
         })
     })
-    .then(() => res.json({ 'rank': rank, 'stats': stats, 'clarifai': clarifaiResponse.status })) //reponse data back to user
+    .then(() => res.json({ 'rank': rank, 'stats': stats, 'clarifai': clarifaiResponse })) //reponse data back to user
     .catch(err => res.status(400).json(err));
 }
 
