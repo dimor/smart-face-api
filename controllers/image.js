@@ -42,6 +42,9 @@ const handleApiCall = (req, res, db) => {
         })
         .catch(err=>res.status(400).json(err))
     })
+
+
+
     // .then(() => {  // get rank of spesific id
     //   return db.select('rank')
     //     .from(db.select(db.raw('*,rank() over(order by user_faces desc) as rank from users')).as('temp'))
@@ -56,7 +59,7 @@ const handleApiCall = (req, res, db) => {
     // })
     .catch (err => {
       console.error(err);
-     return res.status(400).json(err)
+      res.status(400).json(err)
     });
 }
 
