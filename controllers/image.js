@@ -37,6 +37,11 @@ const handleApiCall = (req, res, db) => {
           stats = stats;
           console.log(stats); 
         })
+        .then(()=>{ // return as response  the stats and the clarifai response to user
+          return res.json({ 'stats': stats, 'clarifai': clarifaiResponse, 'rank': rank });
+        })
+
+
     })
     // .then(() => {  // get rank of spesific id
     //   return db.select('rank')
@@ -47,9 +52,9 @@ const handleApiCall = (req, res, db) => {
     //       rank = userRank
     //     })
     // })
-    .then(()=>{ // return as response  the stats and the clarifai response to user
-      return res.json({ 'stats': stats, 'clarifai': clarifaiResponse, 'rank': rank });
-    })
+    // .then(()=>{ // return as response  the stats and the clarifai response to user
+    //   return res.json({ 'stats': stats, 'clarifai': clarifaiResponse, 'rank': rank });
+    // })
     .catch (err => {
       console.error(err);
      return res.status(400).json(err)
