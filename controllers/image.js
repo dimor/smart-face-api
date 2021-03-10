@@ -27,7 +27,7 @@ const handleApiCall = (req, res, db) => {
       }
     })
     .then(()=>{
-        db.from('users').where('login_id', '=', 10)
+       return db.from('users').where('login_id', '=', 10)
       .increment({
         user_used:1,
         user_faces:facesAnalyzed
@@ -37,7 +37,7 @@ const handleApiCall = (req, res, db) => {
           stats = stats;
       })
       .then(()=> {
-        db.select('rank') 
+        return  db.select('rank') 
         .from(db.select(db.raw('*,rank() over(order by user_faces desc) as rank from users')).as('temp'))
         .where({login_id:'6'})
         .returning()
