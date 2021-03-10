@@ -40,11 +40,11 @@ const handleApiCall = (req, res, db) => {
         db.select('rank') 
         .from(db.select(db.raw('*,rank() over(order by user_faces desc) as rank from users')).as('temp'))
         .where({login_id:'6'})
-        .then(rank=> rank = rank)
+        .then(rank=> {
+          return res.json({'stats': stats , 'clarifai':clarifaiResponse, 'rank':rank});
+        })
       })
       .catch(err => res.status(400).json(err));
-    }).then(()=>{
-      return res.json({'stats': stats , 'clarifai':clarifaiResponse, 'rank':rank});
     })
     .catch(err => res.status(400).json(err));
 }
