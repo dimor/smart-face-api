@@ -9,8 +9,8 @@ module.exports = auth=async(req,res,next)=>{
 
     try{
         await jwt.verify(token,'secret', (err,token)=>{
-                console.log(token);
-                req.user = token.id;
+                console.log('token',token);
+                req.user = token;
                 next();
         })
     }catch(err){
