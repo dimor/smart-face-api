@@ -1,7 +1,7 @@
 const express = require ('express');
 const cors = require('cors');
-const registerRoute = require('./routes/register')
-const signInRoute = require('./routes/signin')
+const registerRoute = require('./routes/register');
+const signInRoute = require('./routes/signin');
 const imageRoute = require('./routes/image');
 
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
@@ -15,7 +15,7 @@ app.use(express.json());
 
 app.use('/signin',signInRoute);
 app.use('/register',registerRoute);
-app.use('/image',imageRoute)
+app.use('/image',imageRoute);
 
 app.listen(process.env.PORT||3000,()=>{
 
