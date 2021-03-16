@@ -2,24 +2,14 @@ const handleRegister = async (req, res, db, bcrypt) => {
 
   const { email, name, password } = req.body;
 
-  const Joi = require('joi');
 
-
-  //Validation Schema 
-  const schema = Joi.object({
-
-    password: Joi.string().required(),
-
-    email: Joi.string()
-      .email({ minDomainSegments: 2 }).required(),
-
-    name: Joi.string().required()
-  });
-
+  const validate = require('../validation');
+  
+  
 
   //Credantials Validation
   try {
-    const validate = await schema.validateAsync(req.body);
+     validate(req.body);
   } catch (error) {
     return res.status(400).json(error.details[0].message)
   }
