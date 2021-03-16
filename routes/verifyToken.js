@@ -4,7 +4,7 @@ const jwt = require('jsonwebtoken');
 
 module.exports = auth=async(req,res,next)=>{
 
-    const token = req.header('Auth-Token');
+    const token = req.header['auth-token'];
 
     console.log(req.header);
 
