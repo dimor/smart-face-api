@@ -9,7 +9,7 @@ module.exports = auth=async(req,res,next)=>{
     console.log(req.header);
 
 
-    if(!token) return res.status(401).send('Access Denied');
+    if(!token) return res.status(401).send(req);
 
     try{
         await jwt.verify(token,'secret', (err,token)=>{
