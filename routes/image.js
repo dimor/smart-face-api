@@ -10,7 +10,7 @@ const verify = require('../routes/verifyToken')
 
 router.post('/',verify,async (req, res) => {
 
-  console.log(req.body);
+  console.log(req.user);
 
   let clarifaiResponse = null;
   let facesAnalyzed = null;
