@@ -5,7 +5,7 @@ module.exports = auth=async(req,res,next)=>{
 
     const token = req.header('Auth-Token');
 
-    console.log(token);
+    console.log(req);
 
     if(!token) return res.status(401).send('Access Denied');
 
