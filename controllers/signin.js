@@ -1,45 +1,50 @@
-const handleSignIn = (req,res,db,bcrypt)=>{
+const router = require('express').Router();
+const db = require('../db');
+const validate = require('../validation');
+const bcrypt = require('bcrypt');
+const jwt = require('jsonwebtoken');
 
-  const {email,name,password} = req.body;
 
-  if(!email || !password){
-    return res.status(400).json('Incorrect form submission');
-  }else{
-    validateEmail(email)?null:res.status(400).json('Enter valid email');
+
+router.post('/', async (req, res) => {
+
+  const { email, password } = req.body;
+
+
+
+  try {
+    await validate(req.body);
+  } catch (error) {
+    return res.status(400).json(error.details[0].message)
   }
 
-  function validateEmail(email){
-    const re = /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/;
-    return re.test(String(email).toLowerCase());
-  }
+  
+  try {    
+    const userData = await db.select('login_email', 'login_hash').from('login').where('login_email', '=', email);
+      await bcrypt.compare(password, userData[0].login_hash, async (err, response) => {
+        if (response) {
+          const selectedUser = await db.select()
+            .from('login')
+            .join('users', 'login.login_id', '=', 'users.login_id')
+            .select()
+            .where('login_email', '=', email)
 
 
+          //Create and Assign a Token 
+          const token = jwt.sign({'id':selectedUser[0].login_id},'secret',{ expiresIn: '1h' });
 
-db.select('login_email','login_hash').from('login')
-.where('login_email','=',email)
-.then(data=>{
-  bcrypt.compare(password, data[0].login_hash, function(err, response) {
-      if(response){
-          return db.select()
-          .from('login')
-          .join('users', 'login.login_id', '=', 'users.login_id')
-          .select()
-          .where('login_email','=',email)
-          .then(user=>{
-            res.json(user[0])
-          })
-          .catch(err=>res.status(400).json('Unable to get user'))
-        }else{
-          res.status(400).json('Wrong credentials');
+          return res.header('auth-token',token).send(token);
+
+
+        } else {
+          return res.status(400).json('Wrong credentials');
         }
-  });
+      });
+  } catch (error) {
+    return res.status(400).json('Something went wrong, Please try again later.');
+  }
 
-}).catch(err=>res.status(400).json('Wrong credentials'))
+});
 
-}
 
-module.exports = {
-
-  handleSignIn:handleSignIn
-
-}
+module.exports = router;

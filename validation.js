@@ -1,25 +1,23 @@
 const Joi = require('joi');
 
 
-  //Validation Schema 
+//Validation Schema 
 
 
-  const schema = Joi.object({
+const schema = Joi.object({
 
     password: Joi.string().required(),
 
     email: Joi.string()
-      .email({ minDomainSegments: 2 }).required(),
+        .email({ minDomainSegments: 2 }).required(),
 
-    name: Joi.string().required()
-  });
-
-
-  const valitate = async (formData)=>{
-
-      return await schema.validateAsync(formData);
-
-  }
+    name: Joi.string().allow('')
+});
 
 
-  module.exports.validate = validate;
+const validate = (formData) => {
+        return schema.validateAsync(formData);
+}
+
+
+module.exports = validate;
