@@ -5,7 +5,7 @@ const app = new Clarifai.App({
   apiKey: process.env.CLARIFAI_KEY
 });
 
-const verify = require('../routes/verifyToken');
+const verify = require('../routes/verifyToken')
 
 
 router.post('/',verify,async (req, res) => {
