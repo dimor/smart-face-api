@@ -18,7 +18,8 @@ module.exports = auth=async(req,res,next)=>{
                 next();
         })
     }catch(err){
-        res.status(400).send('Invalid Token');
+
+        res.status(400).send(req);
     }
 
 
