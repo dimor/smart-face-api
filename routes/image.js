@@ -6,7 +6,7 @@ const app = new Clarifai.App({
 });
 
 const verify = require('../routes/verifyToken')
-
+const profile = require('./profile');
 
 router.post('/',verify,async (req, res) => {
 
@@ -17,8 +17,6 @@ router.post('/',verify,async (req, res) => {
   let clarifaiResponse = null;
   let facesAnalyzed = null;
   let dataExist = null;
-  let stats = null;
-  let rank = null;
 
 
   try {
@@ -35,25 +33,18 @@ router.post('/',verify,async (req, res) => {
     }
 
     // increment user stats and return the result
-    const userStats = await db.from('users').where('login_id', '=', id)
+    const [{ user_faces, user_used }] = await db.from('users').where('login_id', '=', id)
       .increment({
         user_used: 1,
         user_faces: facesAnalyzed
       })
       .returning(['user_faces', 'user_used'])
 
-    stats = userStats;
-
     // get rank of spesific id
-    const userRank = await db.select('rank')
-      .from(db.select(db.raw('*,rank() over(order by user_faces desc) as rank from users')).as('temp'))
-      .where({ login_id: id })
-      .returning()
-
-    rank = userRank;
+    const [{rank}] = await profile.getProfileRank(id);
 
     //reponse data back to user
-    return res.json({ 'rank': rank, 'stats': stats, 'clarifai': clarifaiResponse })
+    return res.json({ 'user':{user_faces,user_used,rank}, 'clarifai': clarifaiResponse })
 
   } catch (error) {
     return res.status(400).json(error);

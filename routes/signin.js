@@ -3,7 +3,7 @@ const db = require('../db');
 const validate = require('../validation');
 const bcrypt = require('bcrypt');
 const jwt = require('jsonwebtoken');
-
+const profile = require('./profile');
 
 
 router.post('/', async (req, res) => {
@@ -18,31 +18,46 @@ router.post('/', async (req, res) => {
     return res.status(400).json(error.details[0].message)
   }
 
-  
-  try {    
+
+  try {
+    // compare hashes
     const userData = await db.select('login_email', 'login_hash').from('login').where('login_email', '=', email);
-      await bcrypt.compare(password, userData[0].login_hash, async (err, response) => {
-        if (response) {
-          const selectedUser = await db.select()
-            .from('login')
-            .join('users', 'login.login_id', '=', 'users.login_id')
-            .select()
-            .where('login_email', '=', email)
+    const match = await bcrypt.compare(password, userData[0].login_hash);
 
+    if (match) {
+      //if user credencials right - select user
+      const selectedUser = await db.select()
+        .from('login')
+        .join('users', 'login.login_id', '=', 'users.login_id')
+        .select()
+        .where('login_email', '=', email)
 
-          //Create and Assign a Token 
-          const token = jwt.sign({'id':selectedUser[0].login_id},'secret',{ expiresIn: '1h' });
+      const id = selectedUser[0].login_id;
 
-          return res.header('auth-token',token).send();
+      //Get user stats 
+      const [{ user_faces, user_used }] = await profile.getProfileStats(id);
+      const [{ rank }] = await profile.getProfileRank(id);
 
+      const user = {
+        user_faces,
+        user_used,
+        rank
+      }
 
-        } else {
-          return res.status(400).json('Wrong credentials');
-        }
+      //Create and Assign a Token 
+      jwt.sign({ 'id': id }, 'secret', { expiresIn: '1h' }, async (err, token) => {
+        // if(err) return res.status(400).json('Something went wrong, Please try again later.');
+        console.log(token);
+        return res.header('auth-token', token).json(user);
       });
-  } catch (error) {
-    return res.status(400).json('Something went wrong, Please try again later.');
+
+  } else {
+    return res.status(400).json('Wrong credentials');
   }
+
+} catch (error) {
+  return res.status(400).json('Something went wrong, Please try again later.');
+}
 
 });
 
