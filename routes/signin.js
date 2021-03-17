@@ -48,7 +48,7 @@ router.post('/', async (req, res) => {
       jwt.sign({ 'id': id }, 'secret', { expiresIn: '1h' }, async (err, token) => {
         // if(err) return res.status(400).json('Something went wrong, Please try again later.');
         console.log(token);
-        return res.header('auth-token', token).json(user);
+        return res.header('auth-token', token).json({user});
       });
 
   } else {
