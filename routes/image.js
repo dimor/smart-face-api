@@ -17,6 +17,8 @@ router.post('/',verify,async (req, res) => {
   let clarifaiResponse = null;
   let facesAnalyzed = null;
   let dataExist = null;
+  let stats = null;
+  let rank = null;
 
 
   try {
