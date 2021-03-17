@@ -1,6 +1,24 @@
+const { MODERATION_MODEL } = require('clarifai');
+const { response } = require('express');
 const db = require('../db');
 
 
+const getData= async(req,res)=>{
+
+    try{
+        const [{rank}]  = await getProfileRank(req.body.id);
+        const [{ user_faces, user_used }]  = await getProfileStats(req.body.id);
+        return res.json({'user':{ user_faces, user_used,rank}});
+    }catch(err){
+        res.status(400).json();
+    }
+
+
+  
+
+
+
+}
 
 
 const getProfileStats=(id)=>{
@@ -18,6 +36,6 @@ const getProfileRank= (id)=>{
 
 }
 
-
 module.exports.getProfileStats = getProfileStats;
 module.exports.getProfileRank = getProfileRank;
+ module.exports.getData = getData;
