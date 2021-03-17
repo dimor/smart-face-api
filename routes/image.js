@@ -2,7 +2,7 @@ const router = require('express').Router();
 const Clarifai = require('clarifai');
 const db = require('../db');
 const app = new Clarifai.App({
-  apiKey: process.env.CLARIFAI_KEY
+  apiKey: 'f049e39d52684c93829212ded26b1ca0'
 });
 
 const verify = require('../routes/verifyToken')
@@ -10,8 +10,10 @@ const verify = require('../routes/verifyToken')
 
 router.post('/',verify,async (req, res) => {
 
-  console.log(req);
+  console.log(req.user);
 
+
+  const id = req.user;
   let clarifaiResponse = null;
   let facesAnalyzed = null;
   let dataExist = null;
@@ -33,7 +35,7 @@ router.post('/',verify,async (req, res) => {
     }
 
     // increment user stats and return the result
-    const userStats = await db.from('users').where('login_id', '=', 10)
+    const userStats = await db.from('users').where('login_id', '=', id)
       .increment({
         user_used: 1,
         user_faces: facesAnalyzed
@@ -45,7 +47,7 @@ router.post('/',verify,async (req, res) => {
     // get rank of spesific id
     const userRank = await db.select('rank')
       .from(db.select(db.raw('*,rank() over(order by user_faces desc) as rank from users')).as('temp'))
-      .where({ login_id: '10' })
+      .where({ login_id: id })
       .returning()
 
     rank = userRank;

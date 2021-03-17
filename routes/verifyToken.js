@@ -16,6 +16,7 @@ module.exports = auth = async (req, res, next) => {
         if (err) return res.status(401).send('Access Denied');
         else {
             console.log('@jwt - token',token);
+            req.user = token.id;
             next();
         }
     })
