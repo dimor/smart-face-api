@@ -20,7 +20,7 @@ router.post('/', async (req, res, next) => {
             req.user = token.id;
 
             if (req.baseUrl === '/verify') {
-                return res.status(200).send(token.id);
+                return res.status(200).json(token.id);
             } else {
                 next();
             }
