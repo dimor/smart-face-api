@@ -4,6 +4,9 @@ const registerRoute = require('./routes/register');
 const signInRoute = require('./routes/signin');
 const imageRoute = require('./routes/image');
 
+
+
+
 process.env.NODE_TLS_REJECT_UNAUTHORIZED = 0;
 const app = express();
 
@@ -16,6 +19,9 @@ app.use(express.json());
 app.use('/signin',signInRoute);
 app.use('/register',registerRoute);
 app.use('/image',imageRoute);
+app.use('/verify',verifyRoute);
+
+
 
 app.listen(process.env.PORT||3000,()=>{
 
