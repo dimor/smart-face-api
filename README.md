@@ -10,20 +10,23 @@
 
 a back end api for smart face app.
 
-### Controllers:
-* image - handle image face detection request and count.
-* profile - handle profile request by id.
-* register -handle register request.
-* signin  - handle signin request.
+### Routes:
+* /image - handle image face detection request and update stats.
+* /profile - get user stats .
+* /register -handle register request.
+* /signin  - handle signin request.
+* /verify - verify web tokens.
 
 ### Technologies:
 The project was coded with NodeJs.
 
 **libraries:**
-* bcrypt-nodejs - hash passwords.
+* bcrypt - hash passwords.
 * ExpressJS - web framework for nodejs.
 * clarifai - clarifai api , for face recognition .
 * knex - SQL Query Builder.
+* jsonwebtoken - sign and verify web tokens.
+* joi- data validation.
 
 **Database**
 * PostgreSQL
